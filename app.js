@@ -16,7 +16,16 @@ var session=require('express-session');
 var filestore=require('session-file-store')(session);
 
 var app = express();
-
+////////////route all request to secureport
+app.all('*',(req,res,next)=>{
+  if(req.secure)
+  {
+    return next();
+  }
+  else{
+    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secureport') + req.url);
+  }
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

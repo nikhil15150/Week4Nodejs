@@ -23,7 +23,7 @@ router.route('/')
     })
 
 })
-.post(authenticate.verifyUser,(req,res,next)=>{
+.post(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     //add a new promotions  
     Promotions.create(req.body)
     .then((promo)=>{
@@ -36,13 +36,13 @@ router.route('/')
         next(err);
     })
 })
-.put(authenticate.verifyUser,(req,res,next)=>{
+.put(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     //update a promotion
     res.statuscode=403;
     res.setHeader('Content-Type','application/json');
     res.end(`PUT operation is not supported on https://localhost:3000/promotions`);
 })
-.delete(authenticate.verifyUser,(req,res,next)=>{
+.delete(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     //delete all promotion
     Promotions.remove({})
     .then((promos)=>{
@@ -75,14 +75,14 @@ router.route('/:promoid')
     })
 
 })
-.post(authenticate.verifyUser,(req,res,next)=>{
+.post(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     //add a new promotion  
    res.statuscode=403;
    res.setHeader('Content-Type','application/json');
    res.end(`POST Method is not applicable at http:\\\\localhost:3000\\promotions\\promoid`) ;
 
 })
-.put(authenticate.verifyUser,(req,res,next)=>{
+.put(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     //update a promotion with the given id
     Promotions.findByIdAndUpdate(req.params.promoid,{$set:req.body},{$new:true})
     .then((promo)=>{
@@ -95,7 +95,7 @@ router.route('/:promoid')
         next(err);
     })
 })
-.delete(authenticate.verifyUser,(req,res,next)=>{ 
+.delete(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{ 
     //delete a specific promotion
     Promotions.findByIdAndRemove(req.params.promoid)
     .then((promo)=>{
