@@ -27,14 +27,17 @@ exports.jwtPassport=passport.use(new jwtStrategy(mytoken,(jwt_payload,done)=>{
     user.findOne({_id:jwt_payload._id},(err,user)=>{
         if(err)
         {
+            console.log("err");
             return done(err,false);
         }
         else if (user)
         {
+            console.log("errr1");
             return done(null,user);
         }
         else 
         {
+            console.log("errr2");
             return done(null,false);
         }
     });

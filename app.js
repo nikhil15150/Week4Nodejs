@@ -7,8 +7,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dishesRouter= require('./routes/dish');
+
 var promotionsRouter=require('./routes/promo');
 var leaderRouter=require('./routes/leader');
+var uploadRouter=require('./routes/uploadFile');
 
 var passport=require('passport');
 var authenticate=require('./authenticate');
@@ -85,7 +87,7 @@ app.use('/users', usersRouter);
 
 app.use('/dishes',dishesRouter);
 app.use('/promotions',promotionsRouter);
-
+app.use('/imageUpload',uploadRouter);
 
 
 
